@@ -1,3 +1,18 @@
+"use client";
+
+import { Suspense, lazy } from "react";
+
+// Lazy-load the video element — keeps it out of the initial JS bundle
+const VideoPlayer = lazy(() => import("./VideoPlayer"));
+
+function VideoSkeleton() {
+  return (
+    <div className="w-full h-full bg-midnight flex items-center justify-center">
+      <div className="w-10 h-10 rounded-full border-2 border-accent border-t-transparent animate-spin" />
+    </div>
+  );
+}
+
 export default function VideoSection() {
   return (
     <section id="in-action" className="py-[84px]">
@@ -13,14 +28,9 @@ export default function VideoSection() {
 
         <div className="max-w-[980px] mx-auto mt-11 bg-white/[0.92] border border-black/[0.12] rounded-[18px] shadow-[0_10px_30px_rgba(2,6,23,0.06)] overflow-hidden">
           <div className="w-full aspect-video bg-midnight">
-            <video
-              className="w-full h-full object-cover block"
-              src="/assets/x40-demo.mp4"
-              poster="/assets/x40-spec-sheet.png"
-              controls
-              playsInline
-              preload="metadata"
-            />
+            <Suspense fallback={<VideoSkeleton />}>
+              <VideoPlayer />
+            </Suspense>
           </div>
         </div>
       </div>

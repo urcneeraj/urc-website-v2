@@ -1,3 +1,5 @@
+import MagneticButton from "./MagneticButton";
+
 const steps = [
   {
     badge: "Step 1",
@@ -15,9 +17,9 @@ const steps = [
     desc: "Initial roll-out planned after integration readiness.",
   },
   {
-    badge: "Step 4",
-    title: "Scale internationally",
-    desc: "Pan-India expansion first, then global export markets.",
+    badge: "Vision",
+    title: "Global Scale",
+    desc: "Phase 1: Pan-India expansion across Tier-1 and Tier-2 cities. Phase 2: Global export to MENA and SE Asia markets.",
   },
 ];
 
@@ -30,7 +32,7 @@ export default function Traction() {
             Traction &amp; Scale Roadmap
           </h2>
           <p className="mx-auto max-w-[720px] text-muted font-medium leading-[1.7] m-0">
-            From prototype to expansion - ready for multi-market deployment.
+            From prototype to expansion — ready for multi-market deployment.
           </p>
         </div>
 
@@ -50,12 +52,9 @@ export default function Traction() {
         </div>
 
         <div className="text-center mt-9">
-          <a
-            href="mailto:urcrobotics@gmail.com?subject=Investor%20Briefing%20Request"
-            className="inline-flex items-center justify-center gap-2.5 font-bold rounded-full px-6 py-3.5 text-[15px] border border-transparent bg-gradient-to-br from-accent to-[#0ea5e9] text-white shadow-[0_18px_50px_rgba(0,179,166,0.18)] transition-transform hover:-translate-y-px"
-          >
+          <MagneticButton href="/#contact">
             Request Investor Briefing
-          </a>
+          </MagneticButton>
           <p className="text-muted font-semibold mt-3.5 mb-0">
             We will share the full pitch deck and deployment roadmap.
           </p>
