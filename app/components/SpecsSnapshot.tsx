@@ -14,7 +14,7 @@ const specs = [
 export default function SpecsSnapshot() {
   return (
     <section id="x40-specs" className="py-[84px] bg-offwhite">
-      <div className="max-w-[1180px] mx-auto px-6">
+      <div className="max-w-[1320px] mx-auto px-6">
         <div className="text-center mb-11">
           <h2 className="text-[2.3rem] leading-[1.12] tracking-[-0.02em] m-0 mb-2.5 text-navy">
             X40 Specifications Snapshot
@@ -24,16 +24,16 @@ export default function SpecsSnapshot() {
           </p>
         </div>
 
-        <div className="mt-11 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5">
+        <div className="mt-11 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
           {specs.map((s) => (
             <div
               key={s.label}
-              className="bg-white/[0.92] border border-black/[0.12] rounded-[16px] p-[18px_16px] shadow-[0_10px_30px_rgba(2,6,23,0.06)]"
+              className="bg-white/[0.98] border border-navy/15 rounded-[18px] p-[22px_18px] shadow-[0_14px_32px_rgba(19,42,65,0.12)]"
             >
-              <div className="text-muted font-extrabold text-[12px] uppercase tracking-[0.08em] mb-2.5">
+              <div className="text-slate-500 font-extrabold text-[12px] uppercase tracking-[0.09em] mb-3">
                 {s.label}
               </div>
-              <div className="font-black text-[16px] text-navy leading-[1.3]">{s.value}</div>
+              <div className="font-black text-[18px] text-navy leading-[1.3]">{s.value}</div>
             </div>
           ))}
         </div>

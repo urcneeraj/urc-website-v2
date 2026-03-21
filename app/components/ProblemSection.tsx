@@ -37,7 +37,7 @@ export default function ProblemSection() {
               className="bg-white/[0.92] border border-black/[0.12] rounded-[18px] p-[22px_20px] shadow-[0_10px_30px_rgba(2,6,23,0.06)]"
             >
               <div className="font-black mb-2 text-navy">{p.title}</div>
-              <p className="m-0 text-muted font-medium leading-[1.7] text-sm">{p.desc}</p>
+              <p className="m-0 text-slate-500 font-medium leading-[1.7] text-sm">{p.desc}</p>
             </div>
           ))}
         </div>

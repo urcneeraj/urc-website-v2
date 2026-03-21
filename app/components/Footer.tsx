@@ -22,35 +22,37 @@ export default function Footer() {
           </div>
 
           {/* Contact */}
-          <div>
+          <div className="w-full md:w-[560px]">
             <h4 className="m-0 mb-2.5 text-slate-100 text-[1.05rem] font-bold">Contact Us</h4>
+            <div className="rounded-2xl border border-white/15 bg-white/[0.05] p-5 md:p-7 backdrop-blur-sm shadow-[0_16px_42px_rgba(2,6,23,0.3)]">
+              <p className="my-2 text-base">
+                <strong className="font-semibold" style={{ color: "#e2e8f0" }}>Email: </strong>
+                <a
+                  href="mailto:urcrobotics@gmail.com"
+                  className="underline underline-offset-[3px] hover:text-accent transition-colors"
+                  style={{ color: "#e2e8f0" }}
+                >
+                  urcrobotics@gmail.com
+                </a>
+              </p>
 
-            <p className="my-2 text-sm">
-              <strong className="text-slate-100 font-semibold">Email: </strong>
-              <a
-                href="mailto:urcrobotics@gmail.com"
-                className="text-slate-100 underline underline-offset-[3px] hover:text-accent transition-colors"
-              >
-                urcrobotics@gmail.com
-              </a>
-            </p>
+              <p className="my-2 text-base">
+                <strong className="font-semibold" style={{ color: "#e2e8f0" }}>Phone: </strong>
+                <a
+                  href="tel:+916005173806"
+                  className="underline underline-offset-[3px] hover:text-accent transition-colors"
+                  style={{ color: "#e2e8f0" }}
+                >
+                  +91 6005173806
+                </a>
+              </p>
 
-            <p className="my-2 text-sm">
-              <strong className="text-slate-100 font-semibold">Phone: </strong>
-              <a
-                href="tel:+916005173806"
-                className="text-slate-100 underline underline-offset-[3px] hover:text-accent transition-colors"
-              >
-                +91 6005173806
-              </a>
-            </p>
-
-            {/* Sub-text — slate-400 for quieter supporting info */}
-            <p className="my-2 text-slate-400 text-sm">
-              <strong className="text-slate-100 font-semibold">HQ:</strong> Jammu, India
-              &nbsp;|&nbsp;
-              <strong className="text-slate-100 font-semibold">Mfg:</strong> Gujarat, India
-            </p>
+              <p className="my-2 text-slate-100 text-base">
+                <strong className="text-slate-100 font-semibold">HQ:</strong> Jammu, India
+                &nbsp;|&nbsp;
+                <strong className="text-slate-100 font-semibold">Mfg:</strong> Gujarat, India
+              </p>
+            </div>
           </div>
         </div>
 

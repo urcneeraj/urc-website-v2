@@ -77,7 +77,7 @@ export default function X40Page() {
               <h1 className="text-[3rem] leading-[1.05] tracking-[-0.03em] mt-3 mb-3.5 text-navy">
                 URC X40 Autonomous Scrubber
               </h1>
-              <p className="text-muted font-medium text-base leading-[1.7] mb-5 max-w-[560px] m-0">
+              <p className="text-slate-700 font-semibold text-base leading-[1.7] mb-5 max-w-[560px] m-0">
                 Engineered for absolute reliability, the X40 utilizes industrial-grade hardware and a
                 custom ROS&nbsp;2 technology stack to deliver pristine floors with zero supervision.
               </p>

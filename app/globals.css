@@ -6,11 +6,12 @@
 
 /* Custom brand tokens — available as bg-accent, text-accent, text-muted, etc. */
 @theme {
-  --color-accent:   #00b3a6;
-  --color-navy:     #07182a;
-  --color-midnight: #051a2f;
-  --color-muted:    #5b6b7a;
-  --color-offwhite: #f2f6fb;
+  --color-accent:   #ef0806;
+  --color-sun:      #ffed29;
+  --color-navy:     #132a41;
+  --color-midnight: #0d1f31;
+  --color-muted:    #5d6b79;
+  --color-offwhite: #f6f7f2;
 }
 
 /* Wire up the Inter variable loaded by next/font */
@@ -154,5 +155,63 @@ img {
   }
   html {
     @apply font-mono;
+  }
+}
+
+/* X40 navigation image motion overlay */
+.nav-snake-line {
+  stroke: rgba(59, 130, 246, 0.9);
+  stroke-width: 1.1;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 12 9;
+  animation: snake-dash 3s linear infinite;
+}
+
+.nav-tyre-trail {
+  stroke: rgba(125, 211, 252, 0.65);
+  stroke-width: 0.55;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 1.2 2.4;
+  animation: tyre-dash 0.95s linear infinite;
+}
+
+.nav-bot-dot {
+  fill: #38bdf8;
+}
+
+.nav-bot-halo {
+  fill: rgba(56, 189, 248, 0.24);
+  animation: bot-pulse 1.2s ease-in-out infinite;
+}
+
+@keyframes snake-dash {
+  from {
+    stroke-dashoffset: 0;
+  }
+  to {
+    stroke-dashoffset: -84;
+  }
+}
+
+@keyframes tyre-dash {
+  from {
+    stroke-dashoffset: 0;
+  }
+  to {
+    stroke-dashoffset: -16;
+  }
+}
+
+@keyframes bot-pulse {
+  0%,
+  100% {
+    opacity: 0.35;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.95;
+    transform: scale(1.25);
   }
 }

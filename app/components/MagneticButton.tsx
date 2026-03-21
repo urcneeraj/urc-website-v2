@@ -5,12 +5,13 @@ import { motion, useMotionValue, useSpring } from "framer-motion";
 import Link from "next/link";
 
 interface Props {
-  href: string;
+  href?: string;
+  onClick?: () => void;
   children: React.ReactNode;
   className?: string;
 }
 
-export default function MagneticButton({ href, children, className = "" }: Props) {
+export default function MagneticButton({ href, onClick, children, className = "" }: Props) {
   const ref = useRef<HTMLDivElement>(null);
   const [hovered, setHovered] = useState(false);
 
@@ -39,25 +40,37 @@ export default function MagneticButton({ href, children, className = "" }: Props
   return (
     <motion.div
       ref={ref}
+      whileHover={{ scale: 1.03 }}
+      whileTap={{ scale: 0.97 }}
       style={{
         x: springX,
         y: springY,
         // Teal glow blooms on hover, recedes on leave
         boxShadow: hovered
-          ? "0 0 42px rgba(0,179,166,0.55), 0 18px 50px rgba(0,179,166,0.28)"
-          : "0 18px 50px rgba(0,179,166,0.18)",
+          ? "0 0 42px rgba(239,8,6,0.45), 0 18px 50px rgba(255,237,41,0.3)"
+          : "0 18px 50px rgba(239,8,6,0.2)",
       }}
       onMouseMove={handleMouseMove}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={handleMouseLeave}
-      className="inline-block rounded-full transition-shadow duration-300"
+      className="inline-block rounded-full transition-shadow duration-300 will-change-transform"
     >
-      <Link
-        href={href}
-        className={`inline-flex items-center justify-center gap-2.5 font-bold rounded-full px-6 py-3.5 text-[15px] border border-transparent bg-gradient-to-br from-accent to-[#0ea5e9] text-white ${className}`}
-      >
-        {children}
-      </Link>
+      {href ? (
+        <Link
+          href={href}
+          className={`inline-flex items-center justify-center gap-2.5 font-bold rounded-full px-6 py-3.5 text-[15px] border border-transparent bg-gradient-to-br from-accent to-sun text-navy ${className}`}
+        >
+          {children}
+        </Link>
+      ) : (
+        <button
+          type="button"
+          onClick={onClick}
+          className={`inline-flex items-center justify-center gap-2.5 font-bold rounded-full px-6 py-3.5 text-[15px] border border-transparent bg-gradient-to-br from-accent to-sun text-navy ${className}`}
+        >
+          {children}
+        </button>
+      )}
     </motion.div>
   );
 }
