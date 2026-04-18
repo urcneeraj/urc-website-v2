@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+import ContactInvestorCta from "../components/ContactInvestorCta";
 
 export const metadata: Metadata = {
   title: "Contact URC Robotics",
@@ -50,14 +50,7 @@ export default function ContactPage() {
               </div>
             </div>
 
-            <div className="mt-7">
-              <Link
-                href="/#traction"
-                className="inline-flex items-center justify-center rounded-full bg-gradient-to-br from-accent to-sun px-6 py-3 text-sm font-bold text-navy shadow-[0_12px_30px_rgba(239,8,6,0.24)] hover:-translate-y-px transition-transform"
-              >
-                Open Investor Enquiry Form
-              </Link>
-            </div>
+            <ContactInvestorCta />
           </div>
         </section>
       </main>

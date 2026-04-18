@@ -1,5 +1,4 @@
-const LOGO =
-  "https://raw.githubusercontent.com/urcneeraj/urcrobotics.github.io/main/URC%20(1).png";
+import { SITE_LOGO_SRC } from "../lib/brand";
 
 export default function Footer() {
   return (
@@ -11,7 +10,7 @@ export default function Footer() {
           <div>
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src={LOGO}
+              src={SITE_LOGO_SRC}
               alt="URC Robotics"
               className="h-[46px] w-auto mb-3.5 brightness-0 invert"
             />
@@ -24,7 +23,7 @@ export default function Footer() {
           {/* Contact */}
           <div className="w-full md:w-[560px]">
             <h4 className="m-0 mb-2.5 text-slate-100 text-[1.05rem] font-bold">Contact Us</h4>
-            <div className="rounded-2xl border border-white/15 bg-white/[0.05] p-5 md:p-7 backdrop-blur-sm shadow-[0_16px_42px_rgba(2,6,23,0.3)]">
+            <div className="border border-white/15 bg-white/[0.05] p-5 md:p-7 lg:p-8 shadow-[0_16px_42px_rgba(2,6,23,0.3)]">
               <p className="my-2 text-base">
                 <strong className="font-semibold" style={{ color: "#e2e8f0" }}>Email: </strong>
                 <a

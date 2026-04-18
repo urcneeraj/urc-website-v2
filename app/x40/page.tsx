@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import BackToHomeLink from "../components/BackToHomeLink";
 import Footer from "../components/Footer";
+import { CTA_LINK_GRADIENT_CLASS } from "../lib/cta";
+import { SITE_LOGO_SRC } from "../lib/brand";
 
 export const metadata: Metadata = {
   title: "URC X40 | Product Details",
@@ -12,8 +15,6 @@ const ROBOT_IMG =
   "https://raw.githubusercontent.com/urcneeraj/urcrobotics.github.io/main/Version_4_2026-Feb-21_04-25-36PM-000_CustomizedView51850991782.png";
 const NAV_IMG =
   "https://raw.githubusercontent.com/urcneeraj/urcrobotics.github.io/main/Version_4_2026-Feb-21_01-59-46PM-000_CustomizedView54592678928.png";
-const LOGO =
-  "https://raw.githubusercontent.com/urcneeraj/urcrobotics.github.io/main/URC%20(1).png";
 
 const specs = [
   { label: "Dimension (L x W x H)", value: "1150 x 800 x 770 mm" },
@@ -39,27 +40,23 @@ export default function X40Page() {
       {/* Navbar */}
       <nav className="fixed inset-x-0 top-0 z-[1000] py-3.5 bg-white/[0.92] shadow-[0_10px_40px_rgba(2,6,23,0.08)] backdrop-blur-[10px]">
         <div className="max-w-[1180px] mx-auto px-6 flex items-center justify-between gap-4">
-          <Link
-            href="/"
-            aria-label="URC Robotics Home"
-            className="inline-flex items-center px-3 py-1.5 bg-white/[0.95] border border-black/[0.12] rounded-full"
-          >
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={LOGO} alt="URC Robotics" className="h-10 w-auto" />
-          </Link>
-          <ul className="hidden sm:flex flex-1 items-center justify-center gap-6 list-none p-0 m-0">
-            <li>
-              <Link href="/" className="font-semibold text-[14px] text-navy/95 hover:text-accent transition-colors">
-                ← Back to Home
-              </Link>
-            </li>
-          </ul>
+          <div className="flex min-w-0 flex-1 items-center gap-3 sm:gap-5">
+            <Link
+              href="/"
+              aria-label="URC Robotics Home"
+              className="inline-flex shrink-0 items-center px-3 py-1.5 bg-white/[0.95] border border-black/[0.12] rounded-full"
+            >
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={SITE_LOGO_SRC} alt="URC Robotics" className="h-10 w-auto" />
+            </Link>
+            <BackToHomeLink />
+          </div>
           <a
             href="https://raw.githubusercontent.com/urcneeraj/urcrobotics.github.io/main/v5.pdf"
             target="_blank"
             rel="noopener noreferrer"
             download="URC_X40_Brochure.pdf"
-            className="inline-flex items-center justify-center font-bold rounded-full px-[18px] py-3 text-sm border border-accent/55 text-accent hover:bg-accent/[0.08] transition-colors"
+            className={`${CTA_LINK_GRADIENT_CLASS} shrink-0 px-[18px] py-3 text-sm`}
           >
             Download PDF
           </a>

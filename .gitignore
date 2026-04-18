@@ -42,3 +42,6 @@ next-env.d.ts
 
 .vercel
 .env*.local
+
+# Local duplicate / scratch copy (do not publish)
+/Saku Website new 2.0/

@@ -108,7 +108,7 @@ export default function Features() {
           Bullet lists cascade further via BULLET_CONTAINER / BULLET_ITEM.
         */}
         <motion.div
-          className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 md:gap-5"
+          className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 md:gap-6 lg:gap-8 xl:gap-10"
           variants={CARD_CONTAINER}
           initial="hidden"
           whileInView="visible"
@@ -118,7 +118,7 @@ export default function Features() {
             <motion.div
               key={f.title}
               variants={CARD_ITEM}
-              className="bg-white/[0.92] border border-black/[0.12] rounded-[18px] p-6 shadow-[0_10px_30px_rgba(2,6,23,0.06)]"
+              className="bg-white/[0.92] border border-black/[0.12] rounded-[18px] p-6 shadow-[0_10px_30px_rgba(2,6,23,0.06)] lg:rounded-[22px] lg:p-8"
             >
               {/* Icon badge */}
               <motion.div

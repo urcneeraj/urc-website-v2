@@ -37,7 +37,8 @@ export default function AnalyticsSection() {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    setMounted(true);
+    const id = setTimeout(() => setMounted(true), 0);
+    return () => clearTimeout(id);
   }, []);
 
   return (
@@ -49,7 +50,7 @@ export default function AnalyticsSection() {
       viewport={{ once: true, margin: "-100px" }}
       transition={{ duration: 0.8, ease: EASE }}
     >
-      <div className="mx-auto max-w-[1180px] px-6">
+      <div className="mx-auto max-w-[1320px] px-6">
         <div className="mb-11 text-center">
           <h2 className="m-0 mb-2.5 text-[2.3rem] leading-[1.12] tracking-[-0.02em] text-slate-100">
             Live Operations Dashboard
@@ -59,17 +60,17 @@ export default function AnalyticsSection() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 gap-5 lg:grid-cols-2 [perspective:1200px]">
+        <div className="grid grid-cols-1 gap-5 lg:grid-cols-2 lg:gap-8 xl:gap-10 [perspective:1200px] lg:min-w-0">
           <motion.div
             whileHover={{ rotateX: 3, rotateY: -5, z: 16 }}
             transition={{ type: "spring", stiffness: 120, damping: 16 }}
-            className="rounded-[18px] border border-white/15 bg-navy/55 p-5 shadow-[0_14px_38px_rgba(2,6,23,0.35)] backdrop-blur-sm"
+            className="min-w-0 rounded-[18px] border border-white/15 bg-navy/55 p-5 shadow-[0_14px_38px_rgba(2,6,23,0.35)] backdrop-blur-sm lg:rounded-[22px] lg:p-7"
             style={{ transformStyle: "preserve-3d" }}
           >
             <p className="mb-3 font-mono text-[11px] font-semibold uppercase tracking-[0.15em] text-slate-300">
               Coverage & Uptime Trend
             </p>
-            <div className="h-[280px] w-full">
+            <div className="h-[280px] w-full min-w-0 md:h-[320px] lg:h-[360px]">
               {mounted ? (
                 <ResponsiveContainer width="100%" height="100%">
                   <LineChart data={trendData}>
@@ -97,13 +98,13 @@ export default function AnalyticsSection() {
           <motion.div
             whileHover={{ rotateX: 3, rotateY: 5, z: 16 }}
             transition={{ type: "spring", stiffness: 120, damping: 16 }}
-            className="rounded-[18px] border border-white/15 bg-navy/55 p-5 shadow-[0_14px_38px_rgba(2,6,23,0.35)] backdrop-blur-sm"
+            className="min-w-0 rounded-[18px] border border-white/15 bg-navy/55 p-5 shadow-[0_14px_38px_rgba(2,6,23,0.35)] backdrop-blur-sm lg:rounded-[22px] lg:p-7"
             style={{ transformStyle: "preserve-3d" }}
           >
             <p className="mb-3 font-mono text-[11px] font-semibold uppercase tracking-[0.15em] text-slate-300">
               Cleaning Cycle Distribution
             </p>
-            <div className="h-[280px] w-full">
+            <div className="h-[280px] w-full min-w-0 md:h-[320px] lg:h-[360px]">
               {mounted ? (
                 <ResponsiveContainer width="100%" height="100%">
                   <PieChart>

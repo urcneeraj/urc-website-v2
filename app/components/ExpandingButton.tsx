@@ -41,6 +41,7 @@ export default function ExpandingButton({
       });
     }
     setIsExpanding(true);
+    const NAV_MS = 320;
     timeoutRef.current = window.setTimeout(() => {
       if (onComplete) {
         onComplete();
@@ -48,7 +49,7 @@ export default function ExpandingButton({
         return;
       }
       if (href) router.push(href);
-    }, 800);
+    }, NAV_MS);
   }
 
   return (
@@ -61,7 +62,7 @@ export default function ExpandingButton({
         whileHover={{ y: -2, scale: 1.02 }}
         whileTap={{ scale: 0.98 }}
         transition={{ type: "spring", stiffness: 360, damping: 22 }}
-        className={`relative inline-flex items-center justify-center overflow-hidden rounded-full px-6 py-3 text-sm font-semibold text-white shadow-[0_16px_42px_rgba(2,6,23,0.28)] ${color} ${className}`}
+        className={`relative inline-flex items-center justify-center overflow-hidden rounded-full px-6 py-3 text-sm font-semibold shadow-[0_16px_42px_rgba(2,6,23,0.28)] ${color} ${className}`}
       >
         <span className="pointer-events-none relative z-10">{text}</span>
       </motion.button>
@@ -72,7 +73,7 @@ export default function ExpandingButton({
         style={{ left: origin.x - 12, top: origin.y - 12 }}
         initial={{ scale: 0, opacity: 0 }}
         animate={isExpanding ? { scale: 150, opacity: 1 } : { scale: 0, opacity: 0 }}
-        transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+        transition={{ duration: 0.32, ease: [0.22, 1, 0.36, 1] }}
       />
     </>
   );

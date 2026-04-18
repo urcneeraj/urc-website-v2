@@ -44,18 +44,21 @@ export default function InvestorSection() {
           <h2 className="text-[2.3rem] leading-[1.12] tracking-[-0.02em] m-0 mb-2.5 text-slate-100 drop-shadow-[0_2px_12px_rgba(2,6,23,0.35)]">
             Investor-Ready Value Proposition
           </h2>
-          <p className="mx-auto max-w-[760px] text-slate-300 font-semibold leading-[1.7] m-0">
+          <p className="mx-auto max-w-none md:max-w-[900px] text-slate-300 font-semibold leading-[1.7] m-0 text-base md:text-lg">
             Engineered in-house for affordable automation, scalable deployment, and measurable ROI.
           </p>
         </div>
+      </div>
 
-        <div className="mt-11 grid grid-cols-1 md:grid-cols-3 gap-[18px]">
+      {/* Full-bleed investor cards row */}
+      <div className="relative left-1/2 right-1/2 w-screen -translate-x-1/2">
+        <div className="mt-11 grid grid-cols-1 divide-y divide-black/[0.10] md:grid-cols-3 md:divide-y-0 md:divide-x">
           {cards.map((c) => (
             <div
               key={c.title}
-              className="bg-white/[0.92] border border-black/[0.12] rounded-[18px] p-[24px_22px] shadow-[0_10px_30px_rgba(2,6,23,0.06)]"
+              className="bg-white/[0.92] p-[26px_20px] md:p-[30px_26px] lg:p-[34px_34px]"
             >
-              <div className="h-[170px] overflow-hidden rounded-[14px] border border-navy/10 bg-offwhite">
+              <div className="h-[220px] bg-offwhite md:h-[240px] lg:h-[260px] xl:h-[300px]">
                 <Image
                   src={c.image}
                   alt={c.title}
@@ -65,8 +68,8 @@ export default function InvestorSection() {
                   className={`h-full w-full ${c.fit === "contain" ? "object-contain p-3" : "object-cover"}`}
                 />
               </div>
-              <h3 className="mt-3 mb-2.5 text-[1.2rem] tracking-[-0.01em] text-navy">{c.title}</h3>
-              <p className="text-slate-500 font-medium leading-[1.7] m-0 mb-3.5 text-sm">{c.desc}</p>
+              <h3 className="mt-4 mb-2.5 text-[1.2rem] tracking-[-0.01em] text-navy lg:text-[1.35rem]">{c.title}</h3>
+              <p className="text-slate-500 font-medium leading-[1.7] m-0 mb-3.5 text-sm lg:text-[15px]">{c.desc}</p>
               <ul className="list-none p-0 m-0">
                 {c.items.map((item) => (
                   <li

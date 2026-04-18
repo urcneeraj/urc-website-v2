@@ -10,6 +10,13 @@ const gallery = [
   { src: "/assets/serving-bot-3.png", alt: "Serving robot premium render" },
 ];
 
+const opsMetrics = [
+  { label: "Fleet Coverage", value: "97.6%" },
+  { label: "Runtime", value: "6-8 Hrs" },
+  { label: "LiDAR + Nav2", value: "Online" },
+  { label: "Active Units", value: "24/7" },
+];
+
 export default function ServingRobotSection() {
   const hoverTimerRef = useRef<number | null>(null);
   const [previewImage, setPreviewImage] = useState<{ src: string; alt: string } | null>(null);
@@ -45,11 +52,14 @@ export default function ServingRobotSection() {
             and dependable real-world service performance.
           </p>
         </div>
+      </div>
 
+      {/* Full-bleed media (no outer box) */}
+      <div className="relative left-1/2 right-1/2 w-screen -translate-x-1/2 px-0">
         <div className="grid grid-cols-1 gap-5 lg:grid-cols-2">
-          <div className="relative overflow-hidden rounded-[22px] border border-slate-200/10 bg-slate-900/40 shadow-[0_20px_60px_rgba(2,6,23,0.45)]">
+          <div className="relative aspect-video w-full overflow-hidden bg-midnight">
             <video
-              className="h-full w-full object-cover"
+              className="absolute inset-0 h-full w-full object-cover"
               autoPlay
               muted
               loop
@@ -57,6 +67,7 @@ export default function ServingRobotSection() {
               preload="metadata"
               poster="/assets/serving-bot-1.png"
               controls
+              disablePictureInPicture
             >
               <source src="/assets/Serving-bot-360.mp4" type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"' />
               <source src="/assets/Serving-bot-360.mp4" type="video/mp4" />
@@ -66,27 +77,52 @@ export default function ServingRobotSection() {
 
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             {gallery.map((item, idx) => (
-              <div
+              <button
                 key={item.src}
-                className={`group relative overflow-hidden rounded-[18px] border border-slate-200/10 bg-slate-900/30 shadow-[0_12px_28px_rgba(2,6,23,0.22)] ${
+                type="button"
+                className={`group relative w-full overflow-hidden bg-midnight text-left ${
                   idx === 0 ? "sm:col-span-2" : ""
                 }`}
                 onMouseEnter={() => handlePreviewStart(item)}
                 onMouseLeave={handlePreviewEnd}
+                onFocus={() => setPreviewImage(item)}
+                onBlur={handlePreviewEnd}
               >
-                <div className="relative h-full min-h-[240px]">
+                <div className="relative h-full min-h-[220px] sm:min-h-[240px]">
                   <Image
                     src={item.src}
                     alt={item.alt}
                     fill
-                    sizes="(max-width: 1024px) 100vw, 45vw"
+                    sizes="(max-width: 1024px) 100vw, 50vw"
                     priority
                     loading="eager"
                     className="object-cover transition-transform duration-500 ease-out group-hover:scale-[1.05]"
                   />
                 </div>
-              </div>
+              </button>
             ))}
+          </div>
+        </div>
+      </div>
+
+      <div className="mx-auto max-w-[1200px] px-6">
+
+        <div className="mt-10 grid gap-3 sm:grid-cols-2 lg:mt-12 lg:grid-cols-4">
+          {opsMetrics.map((m) => (
+            <div
+              key={m.label}
+              className="rounded-2xl border border-white/10 bg-white/[0.05] p-4 shadow-[0_12px_30px_rgba(2,6,23,0.25)]"
+            >
+              <p className="mb-1 font-mono text-[11px] uppercase tracking-[0.14em] text-slate-300">{m.label}</p>
+              <p className="text-[22px] font-bold text-slate-100">{m.value}</p>
+            </div>
+          ))}
+          <div className="sm:col-span-2 lg:col-span-4 rounded-2xl border border-accent/35 bg-midnight/70 p-5 shadow-[0_20px_40px_rgba(2,6,23,0.35)]">
+            <p className="font-mono text-[11px] uppercase tracking-[0.14em] text-slate-300">Live Ops Insight</p>
+            <p className="mt-1 text-sm leading-6 text-slate-300">
+              Grid path execution, obstacle recovery, and battery state are streamed in real-time for operator-grade
+              monitoring and audit-ready reporting.
+            </p>
           </div>
         </div>
       </div>

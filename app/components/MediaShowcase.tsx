@@ -3,7 +3,11 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 
-const gallery = [
+const gallery: { src: string; alt: string }[] = [
+  {
+    src: "/assets/x40-warehouse-aisle-gallery.png",
+    alt: "URC X40 autonomous floor scrubber in a large warehouse with industrial shelving and aisle lighting",
+  },
   {
     src: "/assets/Version_4_2026-Mar-20_02-46-12PM-000_CustomizedView8721837951.png",
     alt: "URC X40 new premium render",
@@ -28,14 +32,6 @@ const gallery = [
     src: "/assets/Version_4_2026-Feb-21_02-33-14PM-000_CustomizedView15451423060.png",
     alt: "URC X40 side render",
   },
-  {
-    src: "/assets/77de82fc-a19b-4928-9dc5-8f7ac5546d83.PNG",
-    alt: "URC detail render",
-  },
-  {
-    src: "/assets/1cf0cb33-bba2-4b86-8caf-b4f5107c5c27.PNG",
-    alt: "URC detail render close-up",
-  },
 ];
 
 export default function MediaShowcase() {
@@ -57,44 +53,47 @@ export default function MediaShowcase() {
       <div className="mx-auto max-w-[1180px] px-6">
         <div className="mb-10 text-center">
           <h2 className="m-0 mb-2.5 text-[2.2rem] tracking-[-0.02em] text-navy">Design Renders & Brochures</h2>
-          <p className="mx-auto max-w-[760px] font-mono text-sm leading-[1.7] text-slate-500">
+          <p className="mx-auto max-w-[760px] text-sm font-medium leading-[1.7] text-black">
             Production-grade visuals and downloadable product documents for engineering, sales, and deployment teams.
           </p>
         </div>
 
         {/* Auto-rolling hero frame: advances every 4 seconds */}
-        <div className="relative mb-4 overflow-hidden rounded-[20px] border border-navy/15 bg-white shadow-[0_14px_40px_rgba(19,42,65,0.14)]">
-          <div className="relative aspect-[16/9] w-full bg-gradient-to-b from-slate-100 via-offwhite to-slate-200">
+        <div className="relative left-1/2 right-1/2 mb-4 w-screen -translate-x-1/2 overflow-hidden bg-white">
+          <div className="relative aspect-[16/9] w-full">
             <Image
               key={active.src}
               src={active.src}
               alt={active.alt}
               fill
               sizes="100vw"
-              className="object-cover"
+              className="z-[1] object-cover object-center"
               priority={activeIndex === 0}
             />
 
             <button
+              type="button"
               onClick={goPrev}
               aria-label="Previous render"
-              className="absolute left-3 top-1/2 -translate-y-1/2 rounded-full border border-white/60 bg-navy/55 px-3 py-2 text-sm font-bold text-slate-100 backdrop-blur-sm hover:bg-navy/75"
+              className="absolute left-3 top-1/2 z-30 -translate-y-1/2 rounded-full border border-white/60 bg-navy/70 px-3.5 py-2.5 text-sm font-bold text-slate-100 shadow-md backdrop-blur-sm transition-colors hover:bg-navy/85"
             >
               ←
             </button>
             <button
+              type="button"
               onClick={goNext}
               aria-label="Next render"
-              className="absolute right-3 top-1/2 -translate-y-1/2 rounded-full border border-white/60 bg-navy/55 px-3 py-2 text-sm font-bold text-slate-100 backdrop-blur-sm hover:bg-navy/75"
+              className="absolute right-3 top-1/2 z-30 -translate-y-1/2 rounded-full border border-white/60 bg-navy/70 px-3.5 py-2.5 text-sm font-bold text-slate-100 shadow-md backdrop-blur-sm transition-colors hover:bg-navy/85"
             >
               →
             </button>
 
-            <div className="absolute inset-x-0 bottom-3 z-10 flex items-center justify-center">
+            <div className="absolute inset-x-0 bottom-3 z-20 flex items-center justify-center">
               <div className="flex items-center gap-2 rounded-full border border-white/30 bg-navy/45 px-3 py-1.5 backdrop-blur-sm">
             {gallery.map((img, idx) => (
               <button
                 key={img.src}
+                type="button"
                 onClick={() => setActiveIndex(idx)}
                 aria-label={`Show render ${idx + 1}`}
                 className={`h-2 rounded-full border transition-all ${idx === activeIndex ? "w-10 border-accent/60 bg-accent" : "w-5 border-navy/20 bg-navy/25"}`}
