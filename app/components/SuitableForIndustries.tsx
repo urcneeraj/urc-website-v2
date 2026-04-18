@@ -38,8 +38,12 @@ const INDUSTRIES: Industry[] = [
   {
     id: "retail",
     label: "Retail",
-    imageSrc: null,
-    alt: "",
+    imageSrc: "/assets/industry-retail.png",
+    alt: "URC X40 autonomous floor scrubber in a grocery store aisle with breakfast and snack shelves, aisle signage, and polished floors",
+    caption: {
+      title: "Retail",
+      body: "Keep stores customer-ready—autonomous floor care that navigates aisles, peak hours, and daily traffic without slowing checkout or shopping flow.",
+    },
   },
   {
     id: "education",
