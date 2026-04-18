@@ -1,0 +1,5 @@
+# Speed up / stabilize Vercel uploads (do not send local caches or the empty Saku scratch folder)
+Saku Website new 2.0
+.next
+out
+*.log
