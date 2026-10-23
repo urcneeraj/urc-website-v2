@@ -3,6 +3,7 @@ import { SEARCH_RESULT_ICON_SRC } from "./lib/brand";
 import { Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
+import Navbar from "./components/Navbar";
 
 const jetbrainsMono = JetBrains_Mono({subsets:['latin'],variable:'--font-mono'});
 
@@ -34,6 +35,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={cn("h-full", inter.variable, "font-mono", jetbrainsMono.variable)}>
       <body className="relative min-h-full flex flex-col overflow-x-hidden antialiased">
+        <Navbar />
         <div className="relative z-10">{children}</div>
       </body>
     </html>

@@ -1,9 +1,6 @@
 import type { Metadata } from "next";
-import Link from "next/link";
-import BackToHomeLink from "../components/BackToHomeLink";
 import Footer from "../components/Footer";
 import { CTA_LINK_GRADIENT_CLASS } from "../lib/cta";
-import { SITE_LOGO_SRC } from "../lib/brand";
 
 export const metadata: Metadata = {
   title: "URC X40 | Product Details",
@@ -37,32 +34,6 @@ const specs = [
 export default function X40Page() {
   return (
     <>
-      {/* Navbar */}
-      <nav className="fixed inset-x-0 top-0 z-[1000] py-3.5 bg-white/[0.92] shadow-[0_10px_40px_rgba(2,6,23,0.08)] backdrop-blur-[10px]">
-        <div className="max-w-[1180px] mx-auto px-6 flex items-center justify-between gap-4">
-          <div className="flex min-w-0 flex-1 items-center gap-3 sm:gap-5">
-            <Link
-              href="/"
-              aria-label="URC Robotics Home"
-              className="inline-flex shrink-0 items-center px-3 py-1.5 bg-white/[0.95] border border-black/[0.12] rounded-full"
-            >
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={SITE_LOGO_SRC} alt="URC Robotics" className="h-10 w-auto" />
-            </Link>
-            <BackToHomeLink />
-          </div>
-          <a
-            href="https://raw.githubusercontent.com/urcneeraj/urcrobotics.github.io/main/v5.pdf"
-            target="_blank"
-            rel="noopener noreferrer"
-            download="URC_X40_Brochure.pdf"
-            className={`${CTA_LINK_GRADIENT_CLASS} shrink-0 px-[18px] py-3 text-sm`}
-          >
-            Download PDF
-          </a>
-        </div>
-      </nav>
-
       <main>
         {/* Hero */}
         <section className="py-[84px] bg-offwhite pt-[104px]">
@@ -78,12 +49,23 @@ export default function X40Page() {
                 Engineered for absolute reliability, the X40 utilizes industrial-grade hardware and a
                 custom ROS&nbsp;2 technology stack to deliver pristine floors with zero supervision.
               </p>
-              <a
-                href="mailto:urcrobotics@gmail.com"
-                className="inline-flex items-center justify-center gap-2.5 font-bold rounded-full px-6 py-3.5 text-[15px] border border-transparent bg-gradient-to-br from-accent to-[#0ea5e9] text-white shadow-[0_18px_50px_rgba(0,179,166,0.18)] transition-transform hover:-translate-y-px mt-5"
-              >
-                Contact Sales
-              </a>
+              <div className="mt-5 flex flex-wrap gap-3">
+                <a
+                  href="mailto:urcrobotics@gmail.com"
+                  className="inline-flex items-center justify-center gap-2.5 font-bold rounded-full px-6 py-3.5 text-[15px] border border-transparent bg-gradient-to-br from-accent to-[#0ea5e9] text-white shadow-[0_18px_50px_rgba(0,179,166,0.18)] transition-transform hover:-translate-y-px"
+                >
+                  Contact Sales
+                </a>
+                <a
+                  href="https://raw.githubusercontent.com/urcneeraj/urcrobotics.github.io/main/v5.pdf"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  download="URC_X40_Brochure.pdf"
+                  className={`${CTA_LINK_GRADIENT_CLASS} px-[18px] py-3 text-sm`}
+                >
+                  Download PDF
+                </a>
+              </div>
             </div>
             <div className="shrink-0 w-full lg:w-[460px] lg:max-w-[520px]">
               {/* eslint-disable-next-line @next/next/no-img-element */}

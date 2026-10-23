@@ -6,8 +6,7 @@ import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import { CTA_GRADIENT_BG, CTA_GRADIENT_TEXT } from "../lib/cta";
 import { SITE_LOGO_SRC } from "../lib/brand";
-
-const LIGHT_SURFACE_PATHS = new Set(["/contact"]);
+import { SOLUTIONS } from "../lib/solutions";
 
 type DropdownItem = { label: string; href: string };
 
@@ -15,6 +14,11 @@ const productsMenu: DropdownItem[] = [
   { label: "URC X40", href: "/x40" },
   { label: "Service Robot", href: "/#autonomous-serving-robot" },
 ];
+
+const solutionsMenu: DropdownItem[] = SOLUTIONS.map((solution) => ({
+  label: solution.label,
+  href: `/solutions/${solution.slug}`,
+}));
 
 const technologyMenu: DropdownItem[] = [
   { label: "Platform & stack", href: "/#technology" },
@@ -101,7 +105,8 @@ export default function Navbar() {
     if (pathname !== "/contact") router.prefetch("/contact");
   }, [pathname, router]);
 
-  const onLightSurface = pathname ? LIGHT_SURFACE_PATHS.has(pathname) : false;
+  const isHome = pathname === "/";
+  const onLightSurface = !isHome;
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
@@ -112,17 +117,24 @@ export default function Navbar() {
 
   useEffect(() => {
     if (typeof window === "undefined") return;
+    if (!isHome) {
+      setHeroInView(false);
+      return;
+    }
     const hero = document.getElementById("home");
-    if (!hero) return;
+    if (!hero) {
+      setHeroInView(false);
+      return;
+    }
     const observer = new IntersectionObserver(
       ([entry]) => setHeroInView(entry?.isIntersecting ?? true),
       { threshold: 0.15 },
     );
     observer.observe(hero);
     return () => observer.disconnect();
-  }, []);
+  }, [isHome]);
 
-  const showBlurBar = scrolled && !heroInView;
+  const showBlurBar = isHome ? scrolled && !heroInView : true;
   const darkText = onLightSurface;
 
   const solidContrast = showBlurBar || onLightSurface;
@@ -186,6 +198,7 @@ export default function Navbar() {
           </li>
 
           <NavDropdown label="Products" href="/#products" items={productsMenu} solidContrast={solidContrast} darkText={darkText} />
+          <NavDropdown label="Solutions" href="/solutions/manufacturing" items={solutionsMenu} solidContrast={solidContrast} darkText={darkText} />
           <NavDropdown label="Technology" href="/#technology" items={technologyMenu} solidContrast={solidContrast} darkText={darkText} />
           <NavDropdown label="X40 Specs" href="/x40" items={x40Menu} solidContrast={solidContrast} darkText={darkText} />
         </ul>

@@ -3,7 +3,6 @@
 import { useLayoutEffect, useState } from "react";
 import dynamic from "next/dynamic";
 import { motion } from "framer-motion";
-import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
 import X40HotspotShowcase from "./components/X40HotspotShowcase";
 import SuitableForIndustries from "./components/SuitableForIndustries";
@@ -62,7 +61,6 @@ export default function Home() {
   return (
     <>
       {showSplash ? <OpeningSplash /> : null}
-      <Navbar />
       <motion.main
         className="min-h-screen overflow-x-clip transition-colors duration-700 ease-out"
         style={{ backgroundColor: "#07182A" }}
