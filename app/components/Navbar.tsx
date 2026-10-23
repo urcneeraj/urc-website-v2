@@ -191,15 +191,6 @@ export default function Navbar() {
         </ul>
 
         <div className="justify-self-end">
-          {pathname === "/contact" ? (
-            <Link
-              href="/"
-              prefetch
-              className={`inline-flex items-center justify-center rounded-full px-[18px] py-3 text-sm ${CTA_GRADIENT_BG} ${CTA_GRADIENT_TEXT}`}
-            >
-              Back
-            </Link>
-          ) : (
             <Link
               href="/contact"
               prefetch
@@ -207,8 +198,7 @@ export default function Navbar() {
             >
               Contact Details
             </Link>
-          )}
-        </div>
+            </div>
       </div>
     </nav>
   );
