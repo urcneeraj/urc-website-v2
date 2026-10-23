@@ -199,11 +199,11 @@ export default function Navbar() {
             >
               Back
             </Link>
-          ) : (
+         ) : (
             <Link
               href="/contact"
               prefetch
-              className={`inline-flex items-center justify-center rounded-full px-4 py-2.5 text-sm font-semibold shadow-[0_16px_42px_rgba(2,6,23,0.28)] transition-transform hover:-translate-y-0.5 active:translate-y-0 sm:px-[18px] sm:py-3 ${CTA_GRADIENT_BG} ${CTA_GRADIENT_TEXT}`}
+              className="inline-flex items-center justify-center rounded-full px-4 py-2.5 text-sm font-semibold shadow-[0_16px_42px_rgba(2,6,23,0.28)] transition-transform hover:-translate-y-0.5 active:translate-y-0 sm:px-[18px] sm:py-3 bg-sky-300 text-sky-950 hover:bg-sky-400"
             >
               Contact Details
             </Link>
