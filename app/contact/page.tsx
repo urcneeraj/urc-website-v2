@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import ContactInvestorCta from "../components/ContactInvestorCta";
 
@@ -11,7 +10,6 @@ export const metadata: Metadata = {
 export default function ContactPage() {
   return (
     <>
-      <Navbar />
       <main className="bg-offwhite min-h-screen pt-[110px] pb-16">
         <section className="mx-auto max-w-[980px] px-6">
           <div className="rounded-[22px] border border-navy/15 bg-white p-7 shadow-[0_16px_40px_rgba(19,42,65,0.12)]">
