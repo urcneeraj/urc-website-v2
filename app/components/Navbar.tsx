@@ -195,11 +195,11 @@ export default function Navbar() {
             <Link
               href="/"
               prefetch
-              className={`inline-flex items-center justify-center rounded-full px-[18px] py-3 text-sm ${CTA_GRADIENT_BG} ${CTA_GRADIENT_TEXT}`}
+              className="inline-flex items-center justify-center rounded-full px-[18px] py-3 text-sm bg-sky-300 text-sky-950 hover:bg-sky-400"
             >
               Back
             </Link>
-         ) : (
+          ) : (
             <Link
               href="/contact"
               prefetch
