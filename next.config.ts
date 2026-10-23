@@ -6,7 +6,7 @@ import type { NextConfig } from "next";
 const projectRoot = path.dirname(fileURLToPath(import.meta.url));
 
 const nextConfig: NextConfig = {
-  output: "export",
+  output: "standalone",
   experimental: {
     optimizePackageImports: ["framer-motion", "recharts", "@phosphor-icons/react"],
   },
