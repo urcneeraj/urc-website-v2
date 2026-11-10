@@ -26,6 +26,21 @@ const x40Menu: DropdownItem[] = [
   { label: "Full product page", href: "/x40" },
 ];
 
+const resourcesMenu = [
+  {
+    label: "LinkedIn", // Change to "LinkedIn" if you want standard spelling
+    href: "https://www.linkedin.com/in/urc-robotics",
+    description: "Follow URC Robotics updates & announcements", // Include if your other menu items use a subtitle/description
+    external: true,
+  },
+  {
+    label: "YouTube", // Change to "YouTube" if you want standard capitalization
+    href: "https://youtube.com/@urcrobotics?si=IE9jWOhYMSXLqMjY",
+    description: "Watch URC X40 demos & videos", // Include if your other menu items use a subtitle/description
+    external: true,
+  },
+];
+
 /**
  * CSS `group/drop` + `group-hover` keeps the panel open while the pointer moves from the
  * label into the menu. The previous JS `open` state failed because the closed panel used
