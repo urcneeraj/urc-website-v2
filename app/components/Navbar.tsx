@@ -9,7 +9,7 @@ import { SITE_LOGO_SRC } from "../lib/brand";
 
 const LIGHT_SURFACE_PATHS = new Set(["/contact"]);
 
-type DropdownItem = { label: string; href: string };
+type DropdownItem = { label: string; href: string; external?: boolean };
 
 const productsMenu: DropdownItem[] = [
   { label: "URC X40", href: "/x40" },
@@ -26,17 +26,15 @@ const x40Menu: DropdownItem[] = [
   { label: "Full product page", href: "/x40" },
 ];
 
-const resourcesMenu = [
+const resourcesMenu: DropdownItem[] = [
   {
-    label: "LinkedIn", // Change to "LinkedIn" if you want standard spelling
+    label: "Linkden", // (or "LinkedIn")
     href: "https://www.linkedin.com/in/urc-robotics",
-    description: "Follow URC Robotics updates & announcements", // Include if your other menu items use a subtitle/description
     external: true,
   },
   {
-    label: "YouTube", // Change to "YouTube" if you want standard capitalization
+    label: "Youtube", // (or "YouTube")
     href: "https://youtube.com/@urcrobotics?si=IE9jWOhYMSXLqMjY",
-    description: "Watch URC X40 demos & videos", // Include if your other menu items use a subtitle/description
     external: true,
   },
 ];
@@ -88,17 +86,22 @@ function NavDropdown({
       >
         <div className="isolate rounded-xl border border-navy/15 bg-white py-2 text-[#0a1628] shadow-[0_16px_40px_rgba(19,42,65,0.22)]">
           <ul className="m-0 list-none p-0">
-            {items.map((item) => (
-              <li key={item.href} role="none">
-                <Link
-                  href={item.href}
-                  role="menuitem"
-                  className="block px-4 py-2.5 text-[13px] font-semibold text-[#0a1628] transition-colors hover:bg-slate-100 hover:text-accent"
-                >
-                  {item.label}
-                </Link>
-              </li>
-            ))}
+            {items.map((item) => {
+              const isExternal = item.external || item.href.startsWith("http");
+              return (
+                <li key={item.href} role="none">
+                  <Link
+                    href={item.href}
+                    target={isExternal ? "_blank" : undefined}
+                    rel={isExternal ? "noopener noreferrer" : undefined}
+                    role="menuitem"
+                    className="block px-4 py-2.5 text-[13px] font-semibold text-[#0a1628] transition-colors hover:bg-slate-100 hover:text-accent"
+                  >
+                    {item.label}
+                  </Link>
+                </li>
+              );
+            })}
           </ul>
         </div>
       </div>
@@ -203,6 +206,7 @@ export default function Navbar() {
           <NavDropdown label="Products" href="/#products" items={productsMenu} solidContrast={solidContrast} darkText={darkText} />
           <NavDropdown label="Technology" href="/#technology" items={technologyMenu} solidContrast={solidContrast} darkText={darkText} />
           <NavDropdown label="X40 Specs" href="/x40" items={x40Menu} solidContrast={solidContrast} darkText={darkText} />
+          <NavDropdown label="Resources" href="/#media" items={resourcesMenu} solidContrast={solidContrast} darkText={darkText} />
         </ul>
 
         <div className="justify-self-end">
