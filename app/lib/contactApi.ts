@@ -1,7 +1,7 @@
 import { CONTACT_API_VERSION } from "@/lib/contact/version";
 
 /**
- * Versioned contact submission endpoint (served by Cloudflare Pages Function `functions/api/v1/contact.ts`).
+ * Versioned Next.js contact route (`app/api/v1/contact/route.ts`).
  * Use a relative URL so the same build works on any host; override for unusual proxies via NEXT_PUBLIC_CONTACT_API_BASE.
  */
 export function getContactSubmitUrl(): string {

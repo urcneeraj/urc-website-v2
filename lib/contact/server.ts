@@ -13,7 +13,7 @@ export type ContactHandlerEnv = {
 };
 
 const WEB3FORMS_SUBMIT_URL = "https://api.web3forms.com/submit";
-const MAX_ATTACHMENT_BYTES = 5 * 1024 * 1024;
+const MAX_FORM_BYTES = 32 * 1024;
 
 function json(
   body: Record<string, unknown>,
@@ -22,6 +22,7 @@ function json(
 ): Response {
   const headers = new Headers(extraHeaders);
   headers.set("Content-Type", `application/json; api-version=${CONTACT_API_VERSION}`);
+  headers.set("Cache-Control", "no-store");
   return new Response(JSON.stringify({ apiVersion: CONTACT_API_VERSION, ...body }), { status, headers });
 }
 
@@ -44,9 +45,8 @@ function secondsUntilUtcMonthEnd(now = new Date()): number {
 function corsHeaders(request: Request, env: ContactHandlerEnv): Headers {
   const headers = new Headers();
   const origin = request.headers.get("Origin");
-  const allowed = parseAllowedOrigins(env.ALLOWED_ORIGINS);
   if (origin) {
-    if (allowed.length === 0 || allowed.includes(origin)) {
+    if (originAllowed(request, env)) {
       headers.set("Access-Control-Allow-Origin", origin);
       headers.set("Vary", "Origin");
     }
@@ -59,9 +59,11 @@ function corsHeaders(request: Request, env: ContactHandlerEnv): Headers {
 
 function originAllowed(request: Request, env: ContactHandlerEnv): boolean {
   const allowed = parseAllowedOrigins(env.ALLOWED_ORIGINS);
-  if (allowed.length === 0) return true;
   const origin = request.headers.get("Origin");
-  return !origin || allowed.includes(origin);
+  if (!origin) return true; // Non-browser clients still must pass hCaptcha.
+  return allowed.length === 0
+    ? origin === new URL(request.url).origin
+    : allowed.includes(origin);
 }
 
 function clientIp(request: Request): string {
@@ -131,7 +133,7 @@ export async function handleContactOptions(
   return new Response(null, { status: 204, headers: corsHeaders(request, env) });
 }
 
-export async function handleContactPost(
+async function processContactPost(
   request: Request,
   env: ContactHandlerEnv,
 ): Promise<Response> {
@@ -149,15 +151,38 @@ export async function handleContactPost(
     );
   }
 
-  const rl = await enforceRateLimits(request, env);
-  if (rl) return rl;
-
   let form: FormData;
   try {
-    form = await request.formData();
+    // Bound the actual streamed body too; Content-Length can be absent or false.
+    const reader = request.body?.getReader();
+    if (!reader) return json({ ok: false, error: "bad_request", message: "Invalid form data." }, 400, cors);
+    const chunks: Uint8Array<ArrayBuffer>[] = [];
+    let size = 0;
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      size += value.byteLength;
+      if (size > MAX_FORM_BYTES) {
+        await reader.cancel();
+        return json({ ok: false, error: "too_large", message: "Your enquiry is too large. Please email attachments separately." }, 413, cors);
+      }
+      chunks.push(new Uint8Array(value));
+    }
+    form = await new Response(new Blob(chunks), { headers: request.headers }).formData();
   } catch {
     return json({ ok: false, error: "bad_request", message: "Invalid form data." }, 400, cors);
   }
+
+  if (String(form.get("botcheck") ?? "").trim()) {
+    return json({ ok: false, error: "spam", message: "Submission rejected." }, 400, cors);
+  }
+  const captcha = String(form.get("h-captcha-response") ?? "").trim();
+  if (!captcha || captcha.length > 16000) {
+    return json({ ok: false, error: "captcha", message: "Please complete the human verification and try again." }, 400, cors);
+  }
+
+  const rl = await enforceRateLimits(request, env);
+  if (rl) return rl;
 
   const name = sanitizePlainText(String(form.get("name") ?? ""), fieldLimits.nameMax);
   const email = sanitizePlainText(String(form.get("email") ?? ""), fieldLimits.emailMax).toLowerCase();
@@ -175,6 +200,8 @@ export async function handleContactPost(
   const attachment = form.get("attachment");
   const outgoing = new FormData();
   outgoing.append("access_key", accessKey);
+  // Web3Forms validates this token server-side. hCaptcha MUST be mandatory in its dashboard.
+  outgoing.append("h-captcha-response", captcha);
   outgoing.append("subject", "URC — Investor enquiry");
   outgoing.append("name", name);
   outgoing.append("email", email);
@@ -186,19 +213,12 @@ export async function handleContactPost(
   outgoing.append("message", messageLines.join("\n"));
 
   if (attachment instanceof File && attachment.size > 0) {
-    if (attachment.size > MAX_ATTACHMENT_BYTES) {
-      return json(
-        { ok: false, error: "validation", message: `Attachment must be under ${MAX_ATTACHMENT_BYTES / (1024 * 1024)} MB.` },
-        400,
-        cors,
-      );
-    }
-    outgoing.append("attachment", attachment, attachment.name || "attachment");
+    return json({ ok: false, error: "validation", message: "Please email attachments to urcrobotics@gmail.com." }, 400, cors);
   }
 
   let upstream: Response;
   try {
-    upstream = await fetch(WEB3FORMS_SUBMIT_URL, { method: "POST", body: outgoing });
+    upstream = await fetch(WEB3FORMS_SUBMIT_URL, { method: "POST", body: outgoing, signal: AbortSignal.timeout(15000) });
   } catch {
     return json({ ok: false, error: "upstream", message: "Could not reach email service. Try again later." }, 502, cors);
   }
@@ -210,12 +230,12 @@ export async function handleContactPost(
     return json({ ok: false, error: "upstream", message: "Unexpected response from email service." }, 502, cors);
   }
 
-  if (!upstream.ok || payload.success === false) {
+  if (!upstream.ok || payload.success !== true) {
     return json(
       {
         ok: false,
         error: "upstream",
-        message: payload.message ?? "Could not send message. Please try again.",
+        message: "Your enquiry was not accepted. Please complete a fresh human verification and try again, or email us directly.",
       },
       502,
       cors,
@@ -223,4 +243,13 @@ export async function handleContactPost(
   }
 
   return json({ ok: true, message: "Sent." }, 200, cors);
+}
+
+export async function handleContactPost(request: Request, env: ContactHandlerEnv): Promise<Response> {
+  try {
+    return await processContactPost(request, env);
+  } catch {
+    // Redis/network failures must not turn into an HTML error page or bypass protection.
+    return json({ ok: false, error: "unavailable", message: "Enquiries are temporarily unavailable. Please try again later or email urcrobotics@gmail.com." }, 503, corsHeaders(request, env));
+  }
 }

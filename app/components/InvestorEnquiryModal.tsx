@@ -1,11 +1,12 @@
 "use client";
 
-import { useCallback, useEffect, useId, useState } from "react";
+import { useCallback, useEffect, useId, useRef, useState } from "react";
+import HCaptcha from "@hcaptcha/react-hcaptcha";
 import { fieldLimits } from "@/lib/contact/sanitize";
 import { getContactApiVersion, getContactSubmitUrl } from "../lib/contactApi";
 
 /**
- * POSTs to `/api/v1/contact` (Cloudflare Pages Function), which sanitizes input, rate-limits, and forwards to Web3Forms.
+ * POSTs to the Next.js route; Web3Forms validates hCaptcha before accepting mail.
  */
 export function InvestorEnquiryModal({
   open,
@@ -18,10 +19,15 @@ export function InvestorEnquiryModal({
   const [sending, setSending] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
+  const [captchaToken, setCaptchaToken] = useState("");
+  const captchaRef = useRef<HCaptcha>(null);
+  const submittingRef = useRef(false);
 
   const resetFeedback = useCallback(() => {
     setError(null);
     setSuccess(false);
+    setCaptchaToken("");
+    captchaRef.current?.resetCaptcha();
   }, []);
 
   useEffect(() => {
@@ -36,19 +42,31 @@ export function InvestorEnquiryModal({
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    if (submittingRef.current) return;
+    if (!captchaToken) {
+      setError("Please complete the human verification before sending.");
+      return;
+    }
     setError(null);
     setSuccess(false);
     const form = event.currentTarget;
     const fd = new FormData(form);
+    fd.set("h-captcha-response", captchaToken);
+    submittingRef.current = true;
     setSending(true);
     try {
       const res = await fetch(getContactSubmitUrl(), {
         method: "POST",
         body: fd,
+        signal: AbortSignal.timeout(25000),
         headers: {
           Accept: `application/json; api-version=${getContactApiVersion()}`,
         },
       });
+      if (res.status === 429) {
+        setError("Too many attempts. Please wait a minute before trying again.");
+        return;
+      }
       let data: {
         ok?: boolean;
         message?: string;
@@ -58,7 +76,7 @@ export function InvestorEnquiryModal({
       try {
         data = (await res.json()) as typeof data;
       } catch {
-        setError("Invalid response from server. If you use `next dev`, run `npm run preview:cf` to test the contact API.");
+        setError("We could not send your enquiry. Please try again later or email urcrobotics@gmail.com.");
         return;
       }
       if (!res.ok || !data.ok) {
@@ -70,6 +88,9 @@ export function InvestorEnquiryModal({
     } catch {
       setError("Network error. Check your connection and try again.");
     } finally {
+      submittingRef.current = false;
+      setCaptchaToken("");
+      captchaRef.current?.resetCaptcha();
       setSending(false);
     }
   }
@@ -117,8 +138,12 @@ export function InvestorEnquiryModal({
         ) : null}
 
         <form onSubmit={handleSubmit} className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+          <div className="hidden" aria-hidden="true">
+            <label>Leave this field empty<input name="botcheck" tabIndex={-1} autoComplete="off" /></label>
+          </div>
           <input
             name="name"
+            aria-label="Full Name"
             required
             maxLength={fieldLimits.nameMax}
             placeholder="Full Name"
@@ -127,6 +152,7 @@ export function InvestorEnquiryModal({
           />
           <input
             name="email"
+            aria-label="Email"
             type="email"
             required
             maxLength={254}
@@ -136,6 +162,7 @@ export function InvestorEnquiryModal({
           />
           <input
             name="phone"
+            aria-label="Phone Number"
             maxLength={fieldLimits.phoneMax}
             placeholder="Phone Number"
             disabled={sending}
@@ -143,6 +170,7 @@ export function InvestorEnquiryModal({
           />
           <input
             name="company"
+            aria-label="Company / Organization"
             maxLength={fieldLimits.companyMax}
             placeholder="Company / Organization"
             disabled={sending}
@@ -150,6 +178,7 @@ export function InvestorEnquiryModal({
           />
           <textarea
             name="message"
+            aria-label="Your enquiry"
             required
             maxLength={fieldLimits.messageMax}
             placeholder="Tell us about your enquiry..."
@@ -157,15 +186,25 @@ export function InvestorEnquiryModal({
             disabled={sending}
             className="sm:col-span-2 rounded-xl border border-white/20 bg-navy/40 px-3 py-2 text-sm text-slate-100 placeholder:text-slate-400 disabled:opacity-60"
           />
-          <input
-            name="attachment"
-            type="file"
-            disabled={sending}
-            className="sm:col-span-2 rounded-xl border border-dashed border-sun/45 bg-navy/30 px-3 py-2 text-sm text-slate-200 file:mr-3 file:rounded-md file:border-0 file:bg-sun file:px-3 file:py-1 file:text-xs file:font-semibold file:text-navy disabled:opacity-60"
-          />
+          <p className="sm:col-span-2 m-0 text-xs text-slate-300">For attachments, email <a className="underline" href="mailto:urcrobotics@gmail.com">urcrobotics@gmail.com</a>.</p>
+          <div className="sm:col-span-2">
+            <HCaptcha
+              ref={captchaRef}
+              sitekey="50b2fe65-b00b-4b9e-ad62-3ba471098be2"
+              reCaptchaCompat={false}
+              theme="dark"
+              size="compact"
+              onVerify={setCaptchaToken}
+              onExpire={() => setCaptchaToken("")}
+              onError={() => {
+                setCaptchaToken("");
+                setError("Human verification could not load. Please retry or email us directly.");
+              }}
+            />
+          </div>
           <button
             type="submit"
-            disabled={sending}
+            disabled={sending || !captchaToken}
             className="sm:col-span-2 inline-flex items-center justify-center rounded-xl bg-gradient-to-br from-accent to-sun px-5 py-3 text-sm font-bold text-navy shadow-[0_12px_30px_rgba(239,8,6,0.24)] disabled:opacity-60"
           >
             {sending ? "Sending…" : "Send Enquiry"}
