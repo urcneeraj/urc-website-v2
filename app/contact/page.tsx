@@ -11,10 +11,10 @@ export default function ContactPage() {
   return (
     <>
       <main className="bg-offwhite min-h-screen pt-[110px] pb-16">
-        <section className="mx-auto max-w-[980px] px-6">
-          <div className="rounded-[22px] border border-navy/15 bg-white p-7 shadow-[0_16px_40px_rgba(19,42,65,0.12)]">
+        <section className="mx-auto max-w-[980px] px-4 sm:px-6">
+          <div className="rounded-[22px] border border-navy/15 bg-white p-4 sm:p-7 shadow-[0_16px_40px_rgba(19,42,65,0.12)]">
             <p className="mb-2 font-mono text-xs uppercase tracking-[0.14em] text-slate-500">Contact Information</p>
-            <h1 className="m-0 text-[2.4rem] leading-[1.08] tracking-[-0.02em] text-navy">Get in touch with URC Robotics</h1>
+            <h1 className="m-0 text-[clamp(1.8rem,5vw,2.4rem)] leading-[1.08] tracking-[-0.02em] text-navy">Get in touch with URC Robotics</h1>
             <p className="mt-3 max-w-[640px] text-slate-600 text-sm leading-[1.8]">
               Reach us for demos, deployments, pricing, technical queries, and investor briefings.
             </p>
@@ -24,7 +24,7 @@ export default function ContactPage() {
                 <p className="m-0 font-mono text-[11px] uppercase tracking-[0.14em] text-slate-500">Email</p>
                 <a
                   href="mailto:urcrobotics@gmail.com"
-                  className="mt-1 inline-block text-lg font-semibold text-navy underline underline-offset-4 hover:text-accent transition-colors"
+                  className="mt-1 inline-block max-w-full break-words text-base sm:text-lg font-semibold text-navy underline underline-offset-4 hover:text-accent transition-colors"
                 >
                   urcrobotics@gmail.com
                 </a>
@@ -33,7 +33,7 @@ export default function ContactPage() {
                 <p className="m-0 font-mono text-[11px] uppercase tracking-[0.14em] text-slate-500">Phone</p>
                 <a
                   href="tel:+916005173806"
-                  className="mt-1 inline-block text-lg font-semibold text-navy underline underline-offset-4 hover:text-accent transition-colors"
+                  className="mt-1 inline-block max-w-full break-words text-base sm:text-lg font-semibold text-navy underline underline-offset-4 hover:text-accent transition-colors"
                 >
                   +91 6005173806
                 </a>

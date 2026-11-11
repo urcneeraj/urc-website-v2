@@ -81,20 +81,20 @@ export default function Hero() {
   const [robotDemoOpen, setRobotDemoOpen] = useState(false);
   const [slide, setSlide] = useState(0);
   const [brokenSlides, setBrokenSlides] = useState<boolean[]>(() => Array(HERO_SLIDES.length).fill(false));
-  const [overlay, setOverlay] = useState<HeroOverlayAnalysis | null>(null);
+  const [analysis, setAnalysis] = useState<{ src: string; overlay: HeroOverlayAnalysis } | null>(null);
 
   const activeSlide = useMemo(() => HERO_SLIDES[slide] ?? HERO_SLIDES[0], [slide]);
   const activeSrc = activeSlide.src;
+  const overlay = analysis?.src === activeSrc ? analysis.overlay : null;
 
   useEffect(() => {
     let cancelled = false;
-    setOverlay(null);
     analyzeHeroSlide(activeSrc)
       .then((o) => {
-        if (!cancelled) setOverlay(o);
+        if (!cancelled) setAnalysis({ src: activeSrc, overlay: o });
       })
       .catch(() => {
-        if (!cancelled) setOverlay({ x: 2, y: 0, luminance: 0.2, detailScore: 0 });
+        if (!cancelled) setAnalysis({ src: activeSrc, overlay: { x: 2, y: 0, luminance: 0.2, detailScore: 0 } });
       });
     return () => {
       cancelled = true;
@@ -142,12 +142,12 @@ export default function Hero() {
     <>
     <motion.section
       id="home"
-      className="relative min-h-screen overflow-hidden pt-[88px] md:pt-[92px]"
+      className="hero-responsive relative min-h-screen overflow-hidden pt-[88px] md:pt-[92px]"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.7, ease: EASE }}
     >
-      <div className="absolute inset-0">
+      <div className="hero-media absolute inset-0">
         {/* Fallback poster (always present) */}
         <img
           src={POSTER}
@@ -196,7 +196,7 @@ export default function Hero() {
       </div>
 
       {/* Copy sits in the calmest region per slide; colors contrast with local background luminance */}
-      <div className="pointer-events-none absolute inset-0 z-20">
+      <div className="hero-copy pointer-events-none absolute inset-0 z-20">
         {(() => {
           const lum = overlay?.luminance ?? 0.22;
           const useDarkFg = lum > 0.52;
@@ -220,7 +220,7 @@ export default function Hero() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.55, ease: EASE }}
               className={cn(
-                "pointer-events-auto absolute z-20 w-[min(92vw,560px)] max-w-[min(92vw,560px)] px-4",
+                "hero-copy-card pointer-events-auto absolute z-20 w-[min(92vw,560px)] max-w-[min(92vw,560px)] px-4",
                 px === 0 && "left-0 text-left md:left-2",
                 px === 1 && "left-1/2 -translate-x-1/2 text-center",
                 px === 2 && "right-0 text-right md:right-2",
@@ -264,7 +264,7 @@ export default function Hero() {
         })()}
       </div>
 
-      <div className="absolute inset-x-0 bottom-5 z-40 flex justify-center px-4">
+      <div className="hero-actions absolute inset-x-0 bottom-5 z-40 flex justify-center px-4">
         <div className="flex items-center gap-3">
           <ExpandingButton
             href="/x40"

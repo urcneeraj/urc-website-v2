@@ -215,3 +215,25 @@ img {
     transform: scale(1.25);
   }
 }
+
+/* Keep mobile imagery complete and copy clear of the product. */
+@media (max-width: 1023px) {
+  .hero-responsive { min-height: auto; padding-top: 80px; background: #132a41; }
+  .hero-media { position: relative; aspect-ratio: 16 / 10; }
+  .hero-media img { object-fit: contain; }
+  .hero-copy { position: relative; }
+  .hero-copy-card { position: relative; inset: auto; transform: none !important; width: 100%; max-width: 100%; padding: 24px; text-align: left; }
+  .hero-copy-card h1 { font-size: clamp(26px, 5vw, 42px) !important; color: #f8fafc !important; text-shadow: none !important; }
+  .hero-copy-card p { font-size: 14px !important; color: #e2e8f0 !important; text-shadow: none !important; }
+  .hero-actions { position: relative; bottom: auto; padding-bottom: 24px; }
+}
+section[id] { scroll-margin-top: 90px; }
+input, textarea, select { min-width: 0; }
+
+@media (max-width: 1023px) {
+  .showcase-responsive { min-height: auto; background: #132a41; }
+  .showcase-media { position: relative; aspect-ratio: 16 / 10; }
+  .showcase-media img { object-fit: contain; object-position: center; }
+  .showcase-media > div { display: none; }
+  .showcase-responsive > .relative { min-height: auto; }
+}

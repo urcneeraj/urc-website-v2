@@ -77,6 +77,7 @@ function HotspotDot({
     >
       <button
         type="button"
+        aria-label={hotspot.title}
         aria-expanded={open}
         aria-describedby={labelledBy}
         className="relative flex h-11 w-11 cursor-pointer items-center justify-center rounded-full outline-none ring-sky-400/50 focus-visible:ring-2"
@@ -113,9 +114,9 @@ export default function X40HotspotShowcase() {
   const [openHotspotId, setOpenHotspotId] = useState<number | null>(null);
 
   return (
-    <section className="relative isolate min-h-[100dvh] w-full overflow-hidden">
+    <section className="showcase-responsive relative isolate min-h-[100dvh] w-full overflow-hidden">
       {/* Full-screen background: same image edge-to-edge (incl. behind copy column) */}
-      <div className="pointer-events-none absolute inset-0 z-0">
+      <div className="showcase-media pointer-events-none absolute inset-0 z-0">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={SHOWCASE_IMAGE}
@@ -132,7 +133,7 @@ export default function X40HotspotShowcase() {
 
       <div className="relative z-10 mx-auto flex min-h-[100dvh] w-full max-w-[1600px] flex-col lg:flex-row">
         {/* Left: hotspot layer (coordinates are % of this column = ~where the machine sits) */}
-        <div className="relative min-h-[min(52vh,520px)] w-full flex-[1.05] lg:min-h-0 lg:max-w-none">
+        <div className="hidden lg:block relative min-h-[min(52vh,520px)] w-full flex-[1.05] lg:min-h-0 lg:max-w-none">
           {HOTSPOTS.map((h) => (
             <HotspotDot
               key={h.id}
@@ -155,6 +156,9 @@ export default function X40HotspotShowcase() {
           <p className="mb-8 max-w-xl font-sans text-sm leading-relaxed text-zinc-100/95 drop-shadow-[0_2px_14px_rgba(0,0,0,0.85)] md:text-base">
             Featuring advanced tech and unmatched cleaning power, the X40 is the ultimate solution for all cleaning tasks.
           </p>
+          <dl className="mb-6 space-y-4 lg:hidden">
+            {HOTSPOTS.map((h) => <div key={h.id}><dt className="font-semibold text-white">{h.title}</dt><dd className="mt-1 text-sm text-slate-200">{h.description}</dd></div>)}
+          </dl>
           <div className="flex flex-wrap justify-start gap-3">
             <button
               type="button"

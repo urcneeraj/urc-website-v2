@@ -42,7 +42,7 @@ export default function X40Page() {
               <span className="inline-flex items-center px-3 py-2 rounded-full bg-accent/[0.12] text-accent font-extrabold text-[12px] uppercase tracking-[0.1em]">
                 Flagship Model
               </span>
-              <h1 className="text-[3rem] leading-[1.05] tracking-[-0.03em] mt-3 mb-3.5 text-navy">
+              <h1 className="text-[clamp(2rem,6vw,3rem)] leading-[1.05] tracking-[-0.03em] mt-3 mb-3.5 text-navy">
                 URC X40 Autonomous Scrubber
               </h1>
               <p className="text-slate-700 font-semibold text-base leading-[1.7] mb-5 max-w-[560px] m-0">

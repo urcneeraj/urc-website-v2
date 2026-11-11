@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
-import { CTA_GRADIENT_BG, CTA_GRADIENT_TEXT } from "../lib/cta";
+
 import { SITE_LOGO_SRC } from "../lib/brand";
 
 const LIGHT_SURFACE_PATHS = new Set(["/contact"]);
@@ -112,6 +112,7 @@ function NavDropdown({
 export default function Navbar() {
   const pathname = usePathname();
   const router = useRouter();
+  const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [heroInView, setHeroInView] = useState(true);
 
@@ -167,7 +168,7 @@ export default function Navbar() {
           : "bg-transparent"
       }`}
     >
-      <div className="grid w-full grid-cols-[auto_1fr_auto] items-center gap-3 px-4 sm:gap-4 sm:px-6 lg:px-12">
+      <div className="grid w-full grid-cols-[auto_1fr] lg:grid-cols-[auto_1fr_auto] items-center gap-3 px-4 sm:gap-4 sm:px-6 lg:px-12">
         <Link
           href="/"
           aria-label="URC Robotics Home"
@@ -191,7 +192,7 @@ export default function Navbar() {
           />
         </Link>
 
-        <ul className="m-0 hidden list-none items-center justify-center gap-5 p-0 sm:flex md:gap-7 lg:gap-10 xl:gap-14">
+        <ul className="m-0 hidden list-none items-center justify-center gap-5 p-0 lg:flex lg:gap-5 xl:gap-10">
           <li>
             <Link
               href="/"
@@ -209,7 +210,8 @@ export default function Navbar() {
           <NavDropdown label="Resources" href="/#media" items={resourcesMenu} solidContrast={solidContrast} darkText={darkText} />
         </ul>
 
-        <div className="justify-self-end">
+        <div className="flex items-center gap-2 justify-self-end">
+          <button type="button" aria-expanded={menuOpen} aria-controls="mobile-navigation" onClick={() => setMenuOpen(!menuOpen)} className="lg:hidden rounded-full bg-white px-3 py-3 text-sm font-semibold text-navy">{menuOpen ? "Close" : "Menu"}</button>
           {pathname === "/contact" ? (
             <Link
               href="/"
@@ -224,11 +226,18 @@ export default function Navbar() {
               prefetch
               className="inline-flex items-center justify-center rounded-full px-4 py-2.5 text-sm font-semibold shadow-[0_16px_42px_rgba(2,6,23,0.28)] transition-transform hover:-translate-y-0.5 active:translate-y-0 sm:px-[18px] sm:py-3 bg-sky-300 text-sky-950 hover:bg-sky-400"
             >
-              Contact Details
+              Contact
             </Link>
           )}
         </div>
       </div>
+      {menuOpen && (
+        <div id="mobile-navigation" className="lg:hidden mx-4 mt-3 max-h-[70dvh] overflow-y-auto rounded-2xl bg-white p-4 text-navy shadow-xl" onKeyDown={(e) => { if (e.key === "Escape") setMenuOpen(false); }}>
+          {[{ label: "Home", href: "/" }, ...productsMenu, ...technologyMenu, ...x40Menu, ...resourcesMenu].map((item) => (
+            <Link key={item.label} href={item.href} onClick={() => setMenuOpen(false)} className="block rounded-lg px-3 py-3 text-sm font-semibold hover:bg-slate-100">{item.label}</Link>
+          ))}
+        </div>
+      )}
     </nav>
   );
 }
