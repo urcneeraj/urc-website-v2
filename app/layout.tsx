@@ -36,7 +36,7 @@ export default function RootLayout({
     <html lang="en" className={cn("h-full", inter.variable, "font-mono", jetbrainsMono.variable)}>
       <body className="relative min-h-full flex flex-col overflow-x-hidden antialiased">
         <Navbar />
-        <div className="relative z-10">{children}</div>
+        <div className="relative">{children}</div>
       </body>
     </html>
   );

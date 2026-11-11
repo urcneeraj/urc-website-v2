@@ -113,9 +113,9 @@ export function InvestorEnquiryModal({
       aria-labelledby={`${formId}-title`}
     >
       <div className="max-h-[calc(100dvh-2rem)] w-full max-w-[620px] overflow-y-auto rounded-2xl border border-white/15 bg-midnight p-4 sm:p-6 shadow-[0_20px_60px_rgba(19,42,65,0.45)]">
-        <div className="mb-5 flex items-start justify-between gap-3">
+        <div className="mb-5 flex flex-wrap items-start justify-between gap-3">
           <div className="min-w-0 break-words">
-            <h3 id={`${formId}-title`} className="m-0 text-2xl font-bold text-slate-100">
+            <h3 id={`${formId}-title`} className="m-0 text-xl sm:text-2xl font-bold text-slate-100">
               Investor Enquiry Form
             </h3>
             <p className="mt-1 mb-0 font-mono text-xs text-slate-300">

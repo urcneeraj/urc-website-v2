@@ -10,7 +10,7 @@ import { cn } from "@/lib/utils";
 
 const EASE: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
-const POSTER = "/assets/Version_4_2026-Feb-21_04-23-21PM-000_CustomizedView23273657020.png";
+const POSTER = "/assets/Gemini_Generated_Image_4wkwsm4wkwsm4wkw.png";
 
 /**
  * Hero carousel — delete any entry you do not want (remove the whole `{ ... }` block).

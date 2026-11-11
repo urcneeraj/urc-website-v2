@@ -3,7 +3,7 @@
 import { useCallback, useId, useState } from "react";
 import { cn } from "@/lib/utils";
 
-const SHOWCASE_IMAGE = "/assets/x40-studio-side-swow6d.png";
+const SHOWCASE_IMAGE = "/assets/Gemini_Generated_Image_4wkwsm4wkwsm4wkw.png";
 
 export type HotspotItem = {
   id: number;
