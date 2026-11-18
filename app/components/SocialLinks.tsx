@@ -24,7 +24,7 @@ export function SocialLinks({ tone = "light" }: { tone?: "light" | "dark" }) {
   return (
     <div className="flex flex-wrap items-center gap-2.5">
       {SOCIAL_PROFILES.map(({ platform, label, href }) => (
-        <a key={platform} href={href} target="_blank" rel="noopener noreferrer" aria-label={`URC Robotics on ${label} (opens in a new tab)`} className={`inline-flex min-h-11 items-center justify-center gap-2.5 rounded-xl border px-3.5 py-2 font-sans text-sm font-bold tracking-tight transition-colors focus-visible:outline-2 focus-visible:outline-offset-4 ${colors}`}>
+        <a key={platform} style={{ color: tone === "dark" ? "#e2e8f0" : "#132a41" }} href={href} target="_blank" rel="noopener noreferrer" aria-label={`URC Robotics on ${label} (opens in a new tab)`} className={`inline-flex min-h-11 items-center justify-center gap-2.5 rounded-xl border px-3.5 py-2 font-sans text-sm font-bold tracking-tight transition-colors focus-visible:outline-2 focus-visible:outline-offset-4 ${colors}`}>
           <SocialIcon platform={platform} className="h-[18px] w-[18px]" />
           <span>{label}</span>
           <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" className="ml-1 h-3 w-3 opacity-50" aria-hidden="true"><path d="M4 12 12 4M4 4h8v8" /></svg>
