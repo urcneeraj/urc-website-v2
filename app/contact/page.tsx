@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { SocialLinks } from "../components/SocialLinks";
 import Footer from "../components/Footer";
 import ContactInvestorCta from "../components/ContactInvestorCta";
 
@@ -46,6 +47,12 @@ export default function ContactPage() {
                 <p className="m-0 font-mono text-[11px] uppercase tracking-[0.14em] text-slate-500">Manufacturing</p>
                 <p className="mt-1 mb-0 text-base font-semibold text-navy">Gujarat, India</p>
               </div>
+            </div>
+
+            <div className="mt-4 rounded-xl border border-navy/12 bg-offwhite p-4">
+              <p className="m-0 font-mono text-[11px] uppercase tracking-[0.14em] text-slate-500">Connect with us</p>
+              <p className="mt-1 mb-3 text-sm leading-relaxed text-slate-600">Product updates, robot demonstrations, and news from URC.</p>
+              <SocialLinks />
             </div>
 
             <ContactInvestorCta />

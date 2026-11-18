@@ -1,3 +1,4 @@
+import { SocialLinks } from "./SocialLinks";
 import { SITE_LOGO_SRC } from "../lib/brand";
 
 export default function Footer() {
@@ -62,13 +63,8 @@ export default function Footer() {
           </p>
         </div>
 
-        <nav aria-label="URC Robotics social links" className="mt-6 flex flex-wrap items-center justify-center gap-x-8 gap-y-3 bg-white px-4 py-3">
-          <a href="https://youtube.com/@urcrobotics" target="_blank" rel="noopener noreferrer" aria-label="URC Robotics on YouTube (opens in a new tab)" className="inline-flex min-h-11 items-center rounded-sm transition-opacity hover:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-sky-600">
-            <span aria-hidden="true" className="block h-10 w-40 bg-[url('/assets/social-logos.png')] bg-[length:100%_200%] bg-top bg-no-repeat" />
-          </a>
-          <a href="https://www.linkedin.com/in/urc-robotics" target="_blank" rel="noopener noreferrer" aria-label="URC Robotics on LinkedIn (opens in a new tab)" className="inline-flex min-h-11 items-center rounded-sm transition-opacity hover:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-sky-600">
-            <span aria-hidden="true" className="block h-10 w-40 bg-[url('/assets/social-logos.png')] bg-[length:100%_200%] bg-bottom bg-no-repeat" />
-          </a>
+        <nav aria-label="URC Robotics social links" className="mt-5">
+          <SocialLinks tone="dark" />
         </nav>
       </div>
     </footer>

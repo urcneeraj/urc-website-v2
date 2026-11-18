@@ -5,11 +5,12 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 
+import { SocialIcon, SOCIAL_PROFILES, type SocialPlatform } from "./SocialLinks";
 import { SITE_LOGO_SRC } from "../lib/brand";
 
 const LIGHT_SURFACE_PATHS = new Set(["/contact"]);
 
-type DropdownItem = { label: string; href: string; external?: boolean };
+type DropdownItem = { label: string; href: string; external?: boolean; platform?: SocialPlatform };
 
 const productsMenu: DropdownItem[] = [
   { label: "URC X40", href: "/x40" },
@@ -26,18 +27,7 @@ const x40Menu: DropdownItem[] = [
   { label: "Full product page", href: "/x40" },
 ];
 
-const resourcesMenu: DropdownItem[] = [
-  {
-    label: "Linkden", // (or "LinkedIn")
-    href: "https://www.linkedin.com/in/urc-robotics",
-    external: true,
-  },
-  {
-    label: "Youtube", // (or "YouTube")
-    href: "https://youtube.com/@urcrobotics?si=IE9jWOhYMSXLqMjY",
-    external: true,
-  },
-];
+const resourcesMenu: DropdownItem[] = SOCIAL_PROFILES.map((profile) => ({ ...profile, external: true }));
 
 /**
  * CSS `group/drop` + `group-hover` keeps the panel open while the pointer moves from the
@@ -95,8 +85,9 @@ function NavDropdown({
                     target={isExternal ? "_blank" : undefined}
                     rel={isExternal ? "noopener noreferrer" : undefined}
                     role="menuitem"
-                    className="block px-4 py-2.5 text-[13px] font-semibold text-[#0a1628] transition-colors hover:bg-slate-100 hover:text-accent"
+                    className="flex items-center gap-2.5 px-4 py-2.5 font-sans text-[13px] font-bold text-[#0a1628] transition-colors hover:bg-slate-100 hover:text-accent"
                   >
+                    {item.platform && <SocialIcon platform={item.platform} />}
                     {item.label}
                   </Link>
                 </li>
@@ -233,8 +224,8 @@ export default function Navbar() {
       </div>
       {menuOpen && (
         <div id="mobile-navigation" className="lg:hidden mx-4 mt-3 max-h-[70dvh] overflow-y-auto rounded-2xl bg-white p-4 text-navy shadow-xl" onKeyDown={(e) => { if (e.key === "Escape") setMenuOpen(false); }}>
-          {[{ label: "Home", href: "/" }, ...productsMenu, ...technologyMenu, ...x40Menu, ...resourcesMenu].map((item) => (
-            <Link key={item.label} href={item.href} onClick={() => setMenuOpen(false)} className="block rounded-lg px-3 py-3 text-sm font-semibold hover:bg-slate-100">{item.label}</Link>
+          {[{ label: "Home", href: "/", platform: undefined, external: false }, ...productsMenu, ...technologyMenu, ...x40Menu, ...resourcesMenu].map((item) => (
+            <Link key={item.label} href={item.href} target={item.external ? "_blank" : undefined} rel={item.external ? "noopener noreferrer" : undefined} onClick={() => setMenuOpen(false)} className="flex items-center gap-2.5 rounded-lg px-3 py-3 font-sans text-sm font-bold hover:bg-slate-100">{item.platform && <SocialIcon platform={item.platform} />}{item.label}</Link>
           ))}
         </div>
       )}
